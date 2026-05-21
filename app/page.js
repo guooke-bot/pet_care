@@ -144,6 +144,22 @@ const petTypes = [
   { value: 'multi', icon: '🐾', title: '多宠家庭', desc: '可连续预约安排' },
 ];
 
+
+const getDefaultArrivalTime = () => {
+  const now = new Date();
+  const nextDayAtTen = new Date(now);
+  nextDayAtTen.setDate(now.getDate() + 1);
+  nextDayAtTen.setHours(10, 0, 0, 0);
+
+  const year = nextDayAtTen.getFullYear();
+  const month = String(nextDayAtTen.getMonth() + 1).padStart(2, '0');
+  const day = String(nextDayAtTen.getDate()).padStart(2, '0');
+  const hours = String(nextDayAtTen.getHours()).padStart(2, '0');
+  const minutes = String(nextDayAtTen.getMinutes()).padStart(2, '0');
+
+  return `${year}-${month}-${day}T${hours}:${minutes}`;
+};
+
 const serviceTypes = [
   { value: 'basic', icon: '🛁', title: '基础洗护', desc: '洗澡、吹干、梳毛', defaultChecked: true },
   { value: 'beauty', icon: '✂️', title: '美容造型', desc: '修毛、造型、整形' },
@@ -267,7 +283,7 @@ export default function Page() {
 
                   <div className="field">
                     <label htmlFor="time">到店时间</label>
-                    <input id="time" name="time" type="datetime-local" />
+                    <input id="time" name="time" type="datetime-local" defaultValue={getDefaultArrivalTime()} />
                   </div>
 
                   <div className="service-picker">
